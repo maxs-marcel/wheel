@@ -2,11 +2,9 @@ package fun.maxs.wheel.response.type;
 
 import lombok.Getter;
 
-public enum BusinessType implements IBusinessType {
-
-    SUCCESS(2000, "操作成功"),
-    ERROR(5000, "操作失败"),
-    PARAM_ERROR(6001, "参数异常, 操作失败"),
+public enum ActiveBusinessType implements IBusinessType {
+    ACTIVE_EXPIRED(5001, "活动已过期"),
+    ACTIVE_TYPE_NOT_EXISTS(5002, "活动类型不存在"),
     ;
 
     @Getter
@@ -14,7 +12,7 @@ public enum BusinessType implements IBusinessType {
     @Getter
     private final String msg;
 
-    BusinessType(int code, String msg)
+    ActiveBusinessType(int code, String msg)
     {
         this.code = code;
         this.msg = msg;

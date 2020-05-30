@@ -4,6 +4,7 @@ import fun.maxs.wheel.entity.param.demo.ResultDemoParam;
 import fun.maxs.wheel.entity.vo.demo.DemoListVO;
 import fun.maxs.wheel.exception.BusinessException;
 import fun.maxs.wheel.response.Response;
+import fun.maxs.wheel.response.type.ActiveBusinessType;
 import fun.maxs.wheel.response.type.BusinessType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,21 +41,28 @@ public class DemoController {
      */
     @PostMapping("/resultDemo")
     public Response<Map> resultDemo(@RequestBody ResultDemoParam request){
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "hello");
+        map.put("email", "55156snufa@163.com");
+
         switch (request.getErrorType()){
             case 1:
                 return Response.success();
             case 2:
-                return Response.error(BusinessType.ACTIVE_EXPIRED);
+                return Response.error(ActiveBusinessType.ACTIVE_EXPIRED);
             case 3:
-                Map<String, Object> map = new HashMap<>();
-                map.put("name", "hello");
-                map.put("email", "55156snufa@163.com");
                 return Response.success(map);
             case 4:
-                Assert.notNull("", "hehe");
+                Assert.notNull(null, "");
                 return Response.success();
+            case 5:
+                throw new BusinessException(ActiveBusinessType.ACTIVE_EXPIRED, new NullPointerException());
+            case 6:
+                throw new BusinessException(ActiveBusinessType.ACTIVE_EXPIRED, new NullPointerException(), map, null);
+            case 7:
+                throw new NullPointerException();
             default:
-                throw new BusinessException(BusinessType.ACTIVE_TYPE_NOT_EXISTS);
+                throw new BusinessException(ActiveBusinessType.ACTIVE_TYPE_NOT_EXISTS);
         }
     }
 }
